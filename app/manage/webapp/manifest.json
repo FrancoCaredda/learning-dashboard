@@ -132,6 +132,13 @@
                                             "enabled": true,
                                             "requiresSelection": false,
                                             "text": "{@i18n>application.objectpage.section2.action1}"
+                                        },
+                                        "RemoveUser": {
+                                            "press": "learning.dashboard.manage.ext.controller.UserController.RemoveUser",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "requiresSelection": true,
+                                            "text": "{@i18n>application.objectpage.section2.action2}"
                                         }
                                     }
                                 }

@@ -95,6 +95,30 @@ sap.ui.define([
             this.__pUserDialog.then(function (oDialog) {
                 oDialog.open();
             });
+        },
+        RemoveUser: function(oBinding, aSelectedContexts) {
+            const oCourse = oBinding.getObject();
+
+            const oModel = this.getModel();
+
+
+            let aPromises = aSelectedContexts.map(user => {
+                let oUser = user.getObject()
+                const oBoundContext = oModel.bindContext("/RemoveUserFromCourse(...)");
+                
+                oBoundContext.setParameter("user_ID", oUser.uname);
+                oBoundContext.setParameter("course_ID", oCourse.ID);
+
+                return oBoundContext.execute();
+            });
+
+            // TODO(Fix): The view doesn't refresh
+            Promise.all(aPromises).then((res) => {
+                MessageToast.show("The users have been deleted from the course");
+            }).catch((err) => {
+                console.error(err);
+                MessageToast.show(err.message ? err.message : err);
+            });
         }
     };
 });
