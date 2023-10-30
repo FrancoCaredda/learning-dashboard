@@ -7,10 +7,14 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^7",
-    "express": "^4"
+    "@sap/cds-hana": "^2",
+    "@sap/xssec": "^3",
+    "express": "^4",
+    "passport": "^0"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7",
     "@sap/eslint-plugin-ui5-jsdocs": "^2.0.5",
     "@sap/ux-specification": "^1.108.16",
     "@sapui5/ts-types": "^1.92.2",
@@ -25,7 +29,9 @@
       "OP_API_BUSINESS_PARTNER_SRV": {
         "kind": "odata-v2",
         "model": "srv/external/OP_API_BUSINESS_PARTNER_SRV"
-      }
+      },
+      "db": "hana",
+      "auth": "xsuaa"
     }
   },
   "sapux": [
