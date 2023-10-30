@@ -51,7 +51,7 @@ sap.ui.define([
                 const oModel = this.getModel();
                 const oBoundContext = oModel.bindContext("/AddUserToCourse(...)");
                 
-                oBoundContext.setParameter("user_ID", oUser.uname);
+                oBoundContext.setParameter("user_ID", oUser.ID);
                 oBoundContext.setParameter("course_ID", oCourse.ID);
 
                 // TODO(Fix): The view doesn't refresh
@@ -103,10 +103,10 @@ sap.ui.define([
 
 
             let aPromises = aSelectedContexts.map(user => {
-                let oUser = user.getObject()
+                let oUser = user.getObject().user;
                 const oBoundContext = oModel.bindContext("/RemoveUserFromCourse(...)");
                 
-                oBoundContext.setParameter("user_ID", oUser.uname);
+                oBoundContext.setParameter("user_ID", oUser.ID);
                 oBoundContext.setParameter("course_ID", oCourse.ID);
 
                 return oBoundContext.execute();

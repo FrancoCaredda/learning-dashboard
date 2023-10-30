@@ -11,13 +11,7 @@ define service CourseService {
     };
 
     @readonly
-    define entity UserCourse as SELECT from db.UserCourse {
-        user.ID       as uname,
-        user.lastName as lastName,
-        user.name     as name,
-        user.role     as role,
-        course
-    };
+    define entity UserCourse as SELECT from db.UserCourse;
 
     @readonly 
     define entity BusinessPartner as projection on db.BusinessPartner;

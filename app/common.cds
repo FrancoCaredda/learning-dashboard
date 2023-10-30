@@ -43,14 +43,3 @@ annotate CourseService.Users with {
     }
 };
 
-annotate CourseService.UserCourse with {
-    uname    @title : '{i18n>application.common.users.uname}';
-    name     @title : '{i18n>application.common.users.name}';
-    lastName @title : '{i18n>application.common.users.lastName}';
-    role     @title : '{i18n>application.common.users.role}';
-    role @Common : { 
-        Text : role.name,
-        TextArrangement : #TextOnly
-    }
-};
-

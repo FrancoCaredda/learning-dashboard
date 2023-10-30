@@ -58,10 +58,10 @@ annotate CourseService.Courses with @(UI : {
 
 annotate CourseService.UserCourse with @(UI : {
     LineItem #UserList : [
-        { $Type : 'UI.DataField', Value : uname },
-        { $Type : 'UI.DataField', Value : name },
-        { $Type : 'UI.DataField', Value : lastName },
-        { $Type : 'UI.DataField', Value : role_ID }
+        { $Type : 'UI.DataField', Value : user.ID },
+        { $Type : 'UI.DataField', Value : user.name },
+        { $Type : 'UI.DataField', Value : user.lastName },
+        { $Type : 'UI.DataField', Value : user.role_ID }
     ],
 });
 
