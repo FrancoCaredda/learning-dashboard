@@ -1,0 +1,17 @@
+### AddUserToCourse
+POST http://localhost:4004/odata/v4/course/AddUserToCourse HTTP/1.1
+Content-Type: application/json
+
+{
+    "user_ID": "franco.caredda@sysconsgroup.com",
+    "course_ID": "09e5d37d-f5f5-4b7a-a95b-79610f8972a9"
+}
+
+### RemoveUserFromCourse
+POST http://localhost:4004/odata/v4/course/RemoveUserFromCourse HTTP/1.1
+Content-Type: application/json
+
+{
+    "user_ID": "franco.caredda@sysconsgroup.com",
+    "course_ID": "09e5d37d-f5f5-4b7a-a95b-79610f8972a9"
+}
