@@ -5,7 +5,10 @@ define service CourseService {
     define entity Roles as projection on db.Roles;
     
     @readonly
-    define entity Users as projection on db.Users;
+    define entity Users as projection on db.Users {
+        ID as uname,
+        *
+    };
 
     @readonly
     define entity UserCourse as SELECT from db.UserCourse {

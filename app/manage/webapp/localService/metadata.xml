@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="CourseService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Roles" EntityType="CourseService.Roles"/>
+                <EntitySet Name="Users" EntityType="CourseService.Users">
+                    <NavigationPropertyBinding Path="role" Target="Roles"/>
+                </EntitySet>
+                <EntitySet Name="UserCourse" EntityType="CourseService.UserCourse">
+                    <NavigationPropertyBinding Path="role" Target="Roles"/>
+                    <NavigationPropertyBinding Path="course" Target="Courses"/>
+                </EntitySet>
+                <EntitySet Name="BusinessPartner" EntityType="CourseService.BusinessPartner"/>
+                <EntitySet Name="Courses" EntityType="CourseService.Courses">
+                    <NavigationPropertyBinding Path="businessPartner" Target="BusinessPartner"/>
+                    <NavigationPropertyBinding Path="users" Target="UserCourse"/>
+                </EntitySet>
+                <ActionImport Name="AddUserToCourse" Action="CourseService.AddUserToCourse"/>
+                <ActionImport Name="RemoveUserFromCourse" Action="CourseService.RemoveUserFromCourse"/>
+            </EntityContainer>
+            <EntityType Name="Roles">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="50" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="Users">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="300" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="50" Nullable="false"/>
+                <Property Name="lastName" Type="Edm.String" MaxLength="50" Nullable="false"/>
+                <NavigationProperty Name="role" Type="CourseService.Roles">
+                    <ReferentialConstraint Property="role_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="role_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="UserCourse">
+                <Property Name="uname" Type="Edm.String" MaxLength="300"/>
+                <Property Name="lastName" Type="Edm.String" MaxLength="50"/>
+                <Property Name="name" Type="Edm.String" MaxLength="50"/>
+                <NavigationProperty Name="role" Type="CourseService.Roles">
+                    <ReferentialConstraint Property="role_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="role_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="course" Type="CourseService.Courses" Partner="users">
+                    <ReferentialConstraint Property="course_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="course_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="BusinessPartner">
+                <Key>
+                    <PropertyRef Name="BP_key"/>
+                </Key>
+                <Property Name="BP_key" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="FirstName" Type="Edm.String" MaxLength="40"/>
+                <Property Name="LastName" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <EntityType Name="Courses">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="validFrom" Type="Edm.Date" Nullable="false"/>
+                <Property Name="validTo" Type="Edm.Date" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="300" Nullable="false"/>
+                <Property Name="description" Type="Edm.String"/>
+                <Property Name="priority" Type="Edm.Int32"/>
+                <NavigationProperty Name="businessPartner" Type="CourseService.BusinessPartner">
+                    <ReferentialConstraint Property="businessPartner_BP_key" ReferencedProperty="BP_key"/>
+                </NavigationProperty>
+                <Property Name="businessPartner_BP_key" Type="Edm.String" MaxLength="10"/>
+                <NavigationProperty Name="users" Type="Collection(CourseService.UserCourse)" Partner="course">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <Action Name="AddUserToCourse" IsBound="false">
+                <Parameter Name="user_ID" Type="Edm.String" MaxLength="300"/>
+                <Parameter Name="course_ID" Type="Edm.Guid"/>
+            </Action>
+            <Action Name="RemoveUserFromCourse" IsBound="false">
+                <Parameter Name="user_ID" Type="Edm.String" MaxLength="300"/>
+                <Parameter Name="course_ID" Type="Edm.Guid"/>
+            </Action>
+            <Annotations Target="CourseService.EntityContainer/Roles">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="CourseService.EntityContainer/Users">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="CourseService.Users/role">
+                <Annotation Term="Core.AutoExpand" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CourseService.Users/role_ID">
+                <Annotation Term="Core.AutoExpand" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CourseService.EntityContainer/UserCourse">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="CourseService.UserCourse/role">
+                <Annotation Term="Core.AutoExpand" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CourseService.UserCourse/role_ID">
+                <Annotation Term="Core.AutoExpand" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CourseService.EntityContainer/BusinessPartner">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="CourseService.Courses/priority">
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="LOW_PRIO"/>
+                            <PropertyValue Property="Value" Int="0"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="MEDIUM_PRIO"/>
+                            <PropertyValue Property="Value" Int="1"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="HIGH_PRIO"/>
+                            <PropertyValue Property="Value" Int="2"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

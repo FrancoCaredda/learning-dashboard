@@ -10,10 +10,15 @@
     "express": "^4"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1"
+    "@cap-js/sqlite": "^1",
+    "@sap/eslint-plugin-ui5-jsdocs": "^2.0.5",
+    "@sap/ux-specification": "^1.108.16",
+    "@sapui5/ts-types": "^1.92.2",
+    "eslint": "^7.32.0"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "watch-manage": "cds watch --open manage/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "requires": {
@@ -22,5 +27,8 @@
         "model": "srv/external/OP_API_BUSINESS_PARTNER_SRV"
       }
     }
-  }
+  },
+  "sapux": [
+    "app/manage"
+  ]
 }
