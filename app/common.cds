@@ -8,7 +8,7 @@ annotate CourseService.Courses with {
     validTo         @title : '{i18n>application.common.courses.validTo}';
     businessPartner @title : '{i18n>application.common.courses.businessPartner}';
     businessPartner @Common : { 
-        Text : '{businessPartner/FirstName} {businessPartner/LastName}',
+        Text : businessPartner.FirstName,
         TextArrangement : #TextOnly,
         ValueList : {
             $Type : 'Common.ValueListType',
@@ -37,4 +37,20 @@ annotate CourseService.Users with {
     name     @title : '{i18n>application.common.users.name}';
     lastName @title : '{i18n>application.common.users.lastName}';
     role     @title : '{i18n>application.common.users.role}';
+    role @Common : { 
+        Text : role.name,
+        TextArrangement : #TextOnly
+    }
 };
+
+annotate CourseService.UserCourse with {
+    uname    @title : '{i18n>application.common.users.uname}';
+    name     @title : '{i18n>application.common.users.name}';
+    lastName @title : '{i18n>application.common.users.lastName}';
+    role     @title : '{i18n>application.common.users.role}';
+    role @Common : { 
+        Text : role.name,
+        TextArrangement : #TextOnly
+    }
+};
+

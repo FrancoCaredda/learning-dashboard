@@ -19,9 +19,12 @@ define service CourseService {
         course
     };
 
-    @readonly entity BusinessPartner as projection on db.BusinessPartner;
+    @readonly 
+    define entity BusinessPartner as projection on db.BusinessPartner;
 
+    @odata.draft.enabled
     define entity Courses as projection on db.Courses;
+    
     define action AddUserToCourse(user_ID: String(300), course_ID: UUID);
     define action RemoveUserFromCourse(user_ID: String(300), course_ID: UUID);
 }

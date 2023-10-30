@@ -42,4 +42,14 @@ module.exports = cds.service.impl((srv) => {
             req.error(e);
         }
     });
+
+    srv.on("READ", "BusinessPartner", async (req) => {
+        try {
+            const bp = await cds.connect.to("OP_API_BUSINESS_PARTNER_SRV");
+            return await bp.tx(req).run(req.query);
+        } catch (e) {
+            console.error(e);
+            req.error(e);
+        }
+    });
 });
