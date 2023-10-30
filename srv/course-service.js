@@ -10,7 +10,7 @@ module.exports = cds.service.impl((srv) => {
             const { UserCourse } = db.entities;
 
             const tx = db.tx(req);
-            const users = await tx.run(SELECT.from(UserCourse).where({ user_ID: user_ID }));
+            const users = await tx.run(SELECT.from(UserCourse).where({ user_ID: user_ID, course_ID: course_ID }));
 
             if (users.length > 0) {
                 req.error(400);
