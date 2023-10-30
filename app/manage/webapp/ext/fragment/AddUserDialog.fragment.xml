@@ -1,0 +1,8 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+    <SelectDialog id="AddUserSelectDialog"
+                  items="{/Users}">
+        <items>
+            <StandardListItem title="{name} {lastName}" description="{uname}"/>
+        </items>
+    </SelectDialog>
+</core:FragmentDefinition>
